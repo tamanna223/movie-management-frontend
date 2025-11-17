@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
 
-export default function Home() {
+export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +29,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export default function Home() {
 
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        setError(data?.message ?? "Failed to sign in");
+        setError(data?.message ?? "Failed to sign up");
         return;
       }
 
@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#093545] flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-[#092C39] rounded-2xl px-10 py-12 shadow-lg text-center text-white">
-        <h1 className="text-3xl font-semibold mb-8">Sign in</h1>
+        <h1 className="text-3xl font-semibold mb-8">Sign up</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="text-left">
             <input
@@ -90,11 +90,8 @@ export default function Home() {
             disabled={loading}
             className="mt-4 w-full rounded-md bg-[#2BD17E] text-[#093545] font-semibold py-3 disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {loading ? "Signing in..." : "Login"}
+            {loading ? "Signing up..." : "Sign up"}
           </button>
-          <p className="mt-4 text-sm text-white/80">
-            Don&apos;t have an account? <a href="/register" className="text-[#2BD17E] hover:underline">Sign up</a>
-          </p>
         </form>
       </div>
     </div>
